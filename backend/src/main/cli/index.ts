@@ -1,3 +1,4 @@
+import compressOldLogs from "../routines/compress-old-logs";
 import getSpotifyToken from "../routines/get-spotify-token";
 
 type IRoutine = {
@@ -10,6 +11,10 @@ const availablesRoutines: IRoutine[] = [
     name: "GetSpotifyToken",
     action: getSpotifyToken,
   },
+  {
+    name: "CompressOldLogs",
+    action: compressOldLogs
+  }
 ];
 
 function printAvailablesRoutines() {
