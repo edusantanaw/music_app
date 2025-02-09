@@ -1,7 +1,5 @@
-import express from "express"
+import Server from "./server";
 
-const app = express()
+const server = new Server()
 
-app.listen(3000, ()=> {
-    console.log(`Server running at ${3000}`)
-})
+server.start()
