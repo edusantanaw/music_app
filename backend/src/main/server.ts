@@ -1,8 +1,8 @@
 import "reflect-metadata";
 import express, { type Express } from "express";
 import * as env from "dotenv";
-import { AppDataSource } from "./config/typeorm";
-import { Log } from "./config/log";
+import { AppDataSource } from "./config";
+import { Log } from "./config";
 
 env.config();
 

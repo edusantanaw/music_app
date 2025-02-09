@@ -2,6 +2,7 @@ import winston, { Logger } from "winston";
 
 export class Log {
   protected logger: Logger;
+
   constructor(tag: string) {
     this.logger = this.configurate(tag);
   }
@@ -18,7 +19,18 @@ export class Log {
     this.logger.warn(message);
   }
 
+  protected getCurrentDate() {
+    const currentDate = new Date();
+    const currentDay = currentDate.getDate();
+    const currentMonth = currentDate.getMonth() + 1;
+    const currentYear = currentDate.getFullYear();
+    return `${currentYear}-${
+      currentMonth < 10 ? `0${currentMonth}` : currentMonth
+    }-${currentDay < 10 ? `0${currentDay}` : currentDay}`;
+  }
+
   protected configurate(tag: string) {
+    const day = this.getCurrentDate();
     return winston.createLogger({
       level: "info",
       format: winston.format.combine(
@@ -29,7 +41,7 @@ export class Log {
       ),
       transports: [
         new winston.transports.Console(),
-        new winston.transports.File({ filename: `logs/${tag}.log` }),
+        new winston.transports.File({ filename: `logs/${tag}-${day}.log` }),
       ],
     });
   }
