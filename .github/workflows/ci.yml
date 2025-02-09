@@ -1,0 +1,41 @@
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      -main
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      docker:
+        image: docker:20.10.7
+        options: --privileged
+        ports:
+          - 3000:3000
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run TypeScript build
+        run: npm run build
+
+      - name: Run Tests
+        run: npm test
+
+      - name: Build Docker image
+        run: docker build -t my-app:latest .
