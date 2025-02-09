@@ -1,6 +1,6 @@
-import { UserRepository } from "infra/repository/user-repository";
-import { Log } from "main/config";
 import { Profile } from "passport";
+import { UserRepository } from "../infra/repository/user-repository";
+import { Log } from "../main/config";
 
 export class CreateGoogleUser {
   protected repository: UserRepository;

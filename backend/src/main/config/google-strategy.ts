@@ -1,7 +1,7 @@
 import * as env from "dotenv";
 import passport from "passport";
 import { Strategy } from "passport-google-oauth20";
-import { CreateGoogleUser } from "services/CreateGoogleUser";
+import { CreateGoogleUser } from "../../services/CreateGoogleUser";
 
 env.config();
 

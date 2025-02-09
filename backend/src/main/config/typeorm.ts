@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import { DataSource } from "typeorm";
 import * as env from "dotenv";
-import { User } from "infra/entities";
+import { User } from "../../infra/entities";
 
 env.config();
 
@@ -10,7 +10,6 @@ const USER = process.env.DB_USER;
 const PASSWORD = process.env.DB_PASSWORD;
 const DATABASE = process.env.DATABASE;
 const PORT = Number(process.env.DB_PORT ?? 5432);
-
 export const AppDataSource = new DataSource({
   type: "postgres",
   host: HOST,
@@ -22,8 +21,8 @@ export const AppDataSource = new DataSource({
   logging: false,
   entities: [User],
   migrations: [
-    `./migration/**/*.ts`,
-    `./migration/**/*.js`,
+    `${__dirname}/../../infra/migration/**/*.ts`,
+    `${__dirname}/../../infra/migration/**/*.js`,
   ],
   migrationsRun: true,
 });

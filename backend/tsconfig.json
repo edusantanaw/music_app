@@ -2,8 +2,7 @@
   "compilerOptions": {
     "target": "ESNext",
     "module": "commonjs",
-    "rootDir": "./",
-    "baseUrl": "./src",
+    "rootDir": "./src",
     "resolveJsonModule": true,
     "allowJs": true,
     "outDir": "./dist",
@@ -18,5 +17,8 @@
     "skipLibCheck": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-  }
+  },
+  "include": [
+    "src/**/*.ts", 
+  ]
 }

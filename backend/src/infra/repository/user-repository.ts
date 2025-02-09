@@ -1,7 +1,7 @@
 import { randomUUID } from "crypto";
-import { User } from "infra/entities";
-import { AppDataSource } from "main/config";
 import { Repository } from "typeorm";
+import { AppDataSource } from "../../main/config";
+import { User } from "../entities";
 
 interface ICreateUser {
   firstName: string;
