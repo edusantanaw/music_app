@@ -1,32 +1,31 @@
-import "reflect-metadata";
-import express, { type Express } from "express";
 import * as env from "dotenv";
-import { AppDataSource } from "./config";
-import { Log } from "./config";
+import express, { Express } from "express";
+import "reflect-metadata";
+import { AppDataSource, Log } from "./config";
+import { GoogleStrategy } from "./config/google-strategy";
+import middlewares from "./middlewares";
+import routes from "./routes";
 
 env.config();
 
 class Server {
   protected app: Express;
   protected port: number;
-  protected log: Log
+  protected log: Log;
 
   constructor() {
     this.app = express();
     this.port = Number(process.env.PORT ?? 3000);
-    this.log = new Log("server")
-  }
-
-  protected middlewares() {
-    this.app.use(express.json());
-    this.app.use(express.urlencoded({ extended: true }));
+    this.log = new Log("server");
   }
 
   public async start() {
-    this.middlewares();
-    AppDataSource.initialize()
+    middlewares(this.app);
+    AppDataSource.initialize();
+    GoogleStrategy.configure();
+    routes(this.app);
     this.app.listen(this.port, () => {
-     this.log.info(`Server running at ${this.port}`);
+      this.log.info(`Server running at ${this.port}`);
     });
   }
 }
