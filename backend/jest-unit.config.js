@@ -1,8 +1,3 @@
-const config = require("./jest.config");
-
-const unitConfigs = {
-  ...config,
-  testMatch: ["src/**/*.test.ts"],
-};
-
-module.exports =  unitConfigs;
+const config = require('./jest.config')
+config.testMatch = ['**/*.test.ts']
+module.exports = config
