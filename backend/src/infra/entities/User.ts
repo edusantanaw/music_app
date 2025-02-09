@@ -1,16 +1,29 @@
-import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryColumn,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from "typeorm";
 
 @Entity("tb-users")
 export class User {
   @PrimaryColumn({ type: "text" })
   id!: string;
 
-  @Column({ nullable: false, type: "text" })
+  @Column({ nullable: false, type: "text", name: "first_name" })
   firstName!: string;
 
-  @Column({ nullable: false, type: "text" })
+  @Column({ nullable: false, type: "text", name: "last_name" })
   lastName!: string;
 
   @Column({ nullable: false, type: "text", unique: true })
   email!: string;
+
+  @CreateDateColumn({ name: "created_at" })
+  createdAt!: Date;
+
+  @UpdateDateColumn({ name: "updated_at" })
+  updatedAt!: Date;
 }

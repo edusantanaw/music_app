@@ -32,6 +32,6 @@ export class UserRepository {
         email,
       },
     });
-    return user
-}
+    return user;
+  }
 }

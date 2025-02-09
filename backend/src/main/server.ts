@@ -1,6 +1,6 @@
+import "reflect-metadata";
 import * as env from "dotenv";
 import express, { Express } from "express";
-import "reflect-metadata";
 import { AppDataSource, Log } from "./config";
 import { GoogleStrategy } from "./config/google-strategy";
 import middlewares from "./middlewares";
