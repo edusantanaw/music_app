@@ -10,12 +10,15 @@
     "test:no-watch": "jest --passWithNoTests --runInBand --no-cache",
     "test:unit": "jest --passWithNoTests --runInBand --no-cache -c jest-unit.config.js",
     "test:e2e": "npm jest --passWithNoTests --runInBand --no-cache -c jest-unit.config.js",
-    "build": "tsc"
+    "build": "tsc",
+    "cli": "tsx src/main/cli/index.ts"
   },
   "devDependencies": {
+    "@types/axios": "^0.9.36",
     "@types/express": "^5.0.0",
     "@types/express-session": "^1.18.1",
     "@types/jest": "^29.5.14",
+    "@types/node-cron": "^3.0.11",
     "@types/passport": "^1.0.17",
     "@types/passport-google-oauth20": "^2.0.16",
     "ts-jest": "^29.2.5",
@@ -23,9 +26,11 @@
     "typescript": "^5.7.3"
   },
   "dependencies": {
+    "axios": "^1.7.9",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "express-session": "^1.18.1",
+    "node-cron": "^3.0.3",
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",
     "pg": "^8.13.1",

@@ -5,6 +5,7 @@ import { AppDataSource, Log } from "./config";
 import { GoogleStrategy } from "./config/google-strategy";
 import middlewares from "./middlewares";
 import routes from "./routes";
+import routines from "./routines";
 
 env.config();
 
@@ -24,6 +25,7 @@ class Server {
     await AppDataSource.initialize();
     GoogleStrategy.configure();
     routes(this.app);
+    routines();
     this.app.listen(this.port, () => {
       this.log.info(`Server running at ${this.port}`);
     });
