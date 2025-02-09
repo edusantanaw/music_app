@@ -1,7 +1,7 @@
 import * as env from "dotenv";
 import passport from "passport";
 import { Strategy } from "passport-google-oauth20";
-import { CreateGoogleUser } from "../../services/CreateGoogleUser";
+import { createGoogleUserFactory } from "../factories/services/createGoogleUser";
 
 env.config();
 
@@ -20,7 +20,7 @@ export class GoogleStrategy {
           callbackURL: googleCallbackUR,
         },
         async (_, __, profile, done) => {
-          const createGoogleUser = new CreateGoogleUser();
+          const createGoogleUser = createGoogleUserFactory();
           await createGoogleUser.create(profile);
           return done(null, profile);
         }

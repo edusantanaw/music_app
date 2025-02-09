@@ -21,7 +21,7 @@ class Server {
 
   public async start() {
     middlewares(this.app);
-    AppDataSource.initialize();
+    await AppDataSource.initialize();
     GoogleStrategy.configure();
     routes(this.app);
     this.app.listen(this.port, () => {

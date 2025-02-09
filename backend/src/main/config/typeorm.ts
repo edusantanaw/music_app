@@ -10,6 +10,7 @@ const USER = process.env.DB_USER;
 const PASSWORD = process.env.DB_PASSWORD;
 const DATABASE = process.env.DATABASE;
 const PORT = Number(process.env.DB_PORT ?? 5432);
+
 export const AppDataSource = new DataSource({
   type: "postgres",
   host: HOST,
