@@ -20,13 +20,7 @@ export class Log {
   }
 
   protected getCurrentDate() {
-    const currentDate = new Date();
-    const currentDay = currentDate.getDate();
-    const currentMonth = currentDate.getMonth() + 1;
-    const currentYear = currentDate.getFullYear();
-    return `${currentYear}-${
-      currentMonth < 10 ? `0${currentMonth}` : currentMonth
-    }-${currentDay < 10 ? `0${currentDay}` : currentDay}`;
+    return new Date().toISOString().split("T")[0];
   }
 
   protected configurate(tag: string) {
