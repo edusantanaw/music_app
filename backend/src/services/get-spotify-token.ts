@@ -24,7 +24,7 @@ export class GetSpotifyToken {
   protected log: Log;
   protected credentials: Credentials | null = null;
 
-  constructor() {
+  protected constructor() {
     this.accountAPI = process.env.ACCOUNT_SPOTIFY_API!;
     this.log = new Log("get-spotify-token");
   }

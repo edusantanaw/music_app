@@ -2,9 +2,11 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryColumn,
-  UpdateDateColumn
+  UpdateDateColumn,
 } from "typeorm";
+import { Playlist } from "./Playlist";
 
 @Entity("tb_users")
 export class User {
@@ -19,6 +21,9 @@ export class User {
 
   @Column({ nullable: false, type: "text", unique: true })
   email!: string;
+
+  @OneToMany(() => Playlist, (playlist) => playlist.owner)
+  playlists!: Playlist[];
 
   @CreateDateColumn({ name: "created_at" })
   createdAt!: Date;

@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import { DataSource } from "typeorm";
 import * as env from "dotenv";
-import { User } from "../../infra/entities";
+import { Playlist, User } from "../../infra/entities";
 
 env.config();
 
@@ -20,7 +20,7 @@ export const AppDataSource = new DataSource({
   database: DATABASE,
   synchronize: false,
   logging: false,
-  entities: [User],
+  entities: [User, Playlist],
   migrations: [
     `${__dirname}/../../infra/migration/**/*.ts`,
     `${__dirname}/../../infra/migration/**/*.js`,
