@@ -2,7 +2,7 @@ import axios from "axios";
 import qs from "qs";
 import * as env from "dotenv";
 import { Log } from "../main/config";
-import { SpotifyError } from "./errors/SpotifyError";
+import { SpotifyError } from "./errors/spotify-error";
 
 env.config();
 

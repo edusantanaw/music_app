@@ -22,6 +22,6 @@ export class Playlist1739228687537 implements MigrationInterface {
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
             DROP TABLE IF NOT EXISTS playlist;
-        `);
+    `);
   }
 }

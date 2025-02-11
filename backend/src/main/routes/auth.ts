@@ -1,6 +1,6 @@
-import { Router, Request, Response, NextFunction } from "express";
+import * as env from "dotenv";
+import { Router } from "express";
 import passport from "passport";
-import * as env from "dotenv"
 
 env.config()
 

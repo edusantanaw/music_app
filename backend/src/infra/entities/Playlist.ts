@@ -24,6 +24,9 @@ export class Playlist {
 
   @Column({ type: "boolean", default: false })
   isPublic!: boolean;
+  
+  @Column({type: "simple-array", name: "tracks"})
+  tracks: string[] =[]
 
   @Column({ type: "text", nullable: true })
   coverImageUrl?: string;

@@ -22,8 +22,8 @@ export class UserRepository {
       lastName: data.lastName,
       id: randomUUID(),
     });
-    await this.repository.save(user);
-    return user;
+    const createdUser = await this.repository.save(user);
+    return createdUser;
   }
 
   public async findByEmail(email: string) {

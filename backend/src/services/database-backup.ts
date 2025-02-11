@@ -1,11 +1,13 @@
+import * as env from "dotenv";
 import { exec } from "node:child_process";
-import { Log } from "../main/config";
 import * as fs from "node:fs";
 import path from "node:path";
 import { promisify } from "node:util";
-import * as env from "dotenv";
+import { Log } from "../main/config";
 
 env.config();
+
+const execAsync = promisify(exec);
 
 export class DatabaseBackup {
   protected backupDir: string = "backup";
@@ -33,7 +35,7 @@ export class DatabaseBackup {
 
       process.env.PGPASSWORD  = this.password
       const command = `pg_dump -U ${this.user} -d ${this.database} -h ${this.host} -p ${this.port} --no-password > ${backupPath}`;
-      const execAsync = promisify(exec);
+   
       shouldDelete.push(backupPath);
 
       this.log.info("Running db dump...");
