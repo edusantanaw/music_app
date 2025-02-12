@@ -13,8 +13,14 @@ export default () => {
     "/api/playlist",
     expressAdpter(createPlaylistControllerFactory())
   );
+
   router.get(
     "/api/playlist/tracks/{id}",
+    expressAdpter(loadPlaylistTrackControllerFactory())
+  );
+
+  router.get(
+    "/api/playlist/user/{id}",
     expressAdpter(loadPlaylistTrackControllerFactory())
   );
 

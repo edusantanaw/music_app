@@ -33,10 +33,21 @@ export class PlaylistRepository {
     return createdPlaylist;
   }
 
+  public async loadByUser(userId: string, publicOnly: boolean) {
+    const playlists = await this.repository.findBy({
+      owner: {
+        id: userId,
+      },
+      isPublic: publicOnly
+    });
+
+    return playlists;
+  }
+
   public async loadById(id: string) {
     const playlist = await this.repository.findOneBy({
       id,
     });
-    return playlist
+    return playlist;
   }
 }
