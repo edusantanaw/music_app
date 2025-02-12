@@ -32,4 +32,11 @@ export class PlaylistRepository {
     const createdPlaylist = await this.repository.save(playlist);
     return createdPlaylist;
   }
+
+  public async loadById(id: string) {
+    const playlist = await this.repository.findOneBy({
+      id,
+    });
+    return playlist
+  }
 }

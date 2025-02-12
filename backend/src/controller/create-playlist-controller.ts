@@ -1,5 +1,5 @@
 import { CreatePlaylist, ICreatePlaylist } from "../services/create-playlist";
-import { IHttpStatus } from "../utils/http-status";
+import { HttpStatus, IHttpStatus } from "../utils/http-status";
 import { IController } from "./controller";
 
 export class CreatePlaylistController implements IController {
@@ -8,9 +8,6 @@ export class CreatePlaylistController implements IController {
   public async handle(data: ICreatePlaylist): Promise<IHttpStatus> {
     // [TODO] implement schema validation
     const playlist = await this.createPlaylist.create(data);
-    return {
-      statusCode: 201,
-      body: playlist,
-    };
+    return HttpStatus.created(playlist)
   }
 }

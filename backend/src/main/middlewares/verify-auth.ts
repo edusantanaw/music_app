@@ -2,8 +2,6 @@ import { NextFunction, Request, Response } from "express";
 import { User } from "../../infra/entities";
 
 export default (req: Request, res: Response, next: NextFunction) => {
-  console.log(req.isAuthenticated())
-  console.log(req.headers)
   if (!req.isAuthenticated()) {
     res.redirect("/login");
     return;

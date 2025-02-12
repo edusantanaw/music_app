@@ -23,6 +23,7 @@ export class CreateLocalImage implements ICreateImage {
       const date = new Date().getTime();
       const filename = `${data.filename}-${date}.${data.ext}`;
       const path = `${basePath}/${data.dir}`;
+      this.prepareDir(path)
       await writeFileAsync(`${path}/${filename}`, data.data);
       this.log.info(`Image created with name ${filename}`);
       return `${this.serverURL}/${path}/${filename}`;

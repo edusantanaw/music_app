@@ -6,6 +6,7 @@ import { GoogleStrategy } from "./config/google-strategy";
 import middlewares from "./middlewares";
 import routes from "./routes";
 import routines from "./routines";
+import { connectRedis } from "./config/redis";
 
 env.config();
 
@@ -23,6 +24,7 @@ class Server {
   public async start() {
     middlewares(this.app);
     await AppDataSource.initialize();
+    await connectRedis();
     GoogleStrategy.configure();
     routes(this.app);
     routines();
