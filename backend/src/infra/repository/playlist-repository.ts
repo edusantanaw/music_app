@@ -38,7 +38,7 @@ export class PlaylistRepository {
       owner: {
         id: userId,
       },
-      isPublic: publicOnly
+      isPublic: publicOnly ? true : undefined
     });
 
     return playlists;
