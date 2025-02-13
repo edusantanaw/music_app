@@ -1,4 +1,6 @@
+import { AppDataSource } from "../config";
 import compressOldLogs from "../routines/compress-old-logs";
+import createPlaylist from "../routines/create-playlist";
 import databaseBackup from "../routines/database-backup";
 import getSpotifyToken from "../routines/get-spotify-token";
 
@@ -20,6 +22,10 @@ const availablesRoutines: IRoutine[] = [
     name: "CreateDatabaseBackup",
     action: databaseBackup,
   },
+  {
+    name: "CreatePlaylistTest",
+    action: createPlaylist,
+  },
 ];
 
 function printAvailablesRoutines() {
@@ -28,6 +34,7 @@ function printAvailablesRoutines() {
 }
 
 async function runCli() {
+  await AppDataSource.initialize()
   const args = process.argv.slice(2);
 
   const routine = args[0];

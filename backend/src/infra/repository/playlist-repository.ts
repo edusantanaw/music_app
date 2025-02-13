@@ -7,7 +7,7 @@ interface ICreatePlaylist {
   name: string;
   description?: string;
   coverImageUrl?: string;
-  isPublic: false;
+  isPublic: boolean;
   owner: string;
 }
 
@@ -24,10 +24,10 @@ export class PlaylistRepository {
       coverImageUrl: data?.coverImageUrl,
       isCreatedOnSpotify: false,
       isPublic: data.isPublic,
-      owner: {
-        id: data.owner,
-      },
       id: randomUUID(),
+      owner: {
+        id: data.owner
+      }
     });
     const createdPlaylist = await this.repository.save(playlist);
     return createdPlaylist;
@@ -36,7 +36,7 @@ export class PlaylistRepository {
   public async loadByUser(userId: string, publicOnly: boolean) {
     const playlists = await this.repository.findBy({
       owner: {
-        id: userId,
+        id: userId
       },
       isPublic: publicOnly ? true : undefined
     });

@@ -5,7 +5,7 @@ export interface ICreatePlaylist {
   name: string;
   description: string;
   coverImageUrlBase64?: string;
-  isPublic: false;
+  isPublic: boolean;
   userId: string;
   imageExt?: string;
 }
@@ -43,7 +43,7 @@ export class CreatePlaylist {
   }
 
   protected async saveImage(data: ISaveImage) {
-    const coverImageUrl = await this.createImage.create({
+    const coverImage = await this.createImage.create({
       data: data.coverImageUrlBase64,
       filename: data.name.split(" ").join("_"),
       ext: data.imageExt,
@@ -51,6 +51,6 @@ export class CreatePlaylist {
       dir: "playlist/coverage",
     });
 
-    return coverImageUrl;
+    return coverImage.url;
   }
 }

@@ -6,6 +6,14 @@ export interface ICreateImageData {
   ext: string;
 }
 
+export type ICreateImageResponse = {
+  fileDirPath: string;
+  url: string;
+  filename: string
+};
+
 export interface ICreateImage {
-  create: (data: ICreateImageData) => Promise<string>;
+  create: (
+    data: ICreateImageData
+  ) => Promise<ICreateImageResponse>;
 }

@@ -6,6 +6,7 @@ export class LoadPlaylistTracksController implements IController {
   constructor(protected loadPlaylistTrack: LoadPlaylistTracks) {}
 
   public async handle(data: { id: string }): Promise<IHttpStatus> {
+    console.log(data)
     const tracks = await this.loadPlaylistTrack.load(data.id);
     return HttpStatus.ok(tracks)
   }

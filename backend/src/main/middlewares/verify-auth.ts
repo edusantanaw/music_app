@@ -3,7 +3,7 @@ import { User } from "../../infra/entities";
 
 export default (req: Request, res: Response, next: NextFunction) => {
   if (!req.isAuthenticated()) {
-    res.redirect("/login");
+    res.redirect("/api/google");
     return;
   }
   const user = req.user as User;

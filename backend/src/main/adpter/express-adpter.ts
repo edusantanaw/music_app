@@ -7,6 +7,7 @@ export default (controller: IController) => {
   const log = new Log("controller-request");
   return async (req: Request, res: Response) => {
     try {
+      console.log(11111111111)
       const { statusCode, body } = await controller.handle({
         ...req.query,
         ...req.params,

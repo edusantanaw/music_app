@@ -9,10 +9,6 @@ export default () => {
 
   const router = Router();
   
-  router.get("/", (_, res) => {
-    res.status(200).json("Autenticado");
-  });
-  
   router.get(
     "/api/google",
     passport.authenticate("google", { scope: ["profile", "email"] })
