@@ -1,5 +1,6 @@
 import s3, {
   CreateBucketCommand,
+  GetBucketAclCommand,
   PutBucketPolicyCommand,
   PutObjectCommand,
   S3Client,
@@ -22,6 +23,20 @@ export class S3Service {
 
   constructor(protected log: Log) {
     this.client = new S3Client(this.getCredentials());
+  }
+
+  public async getBucket(bucket: string) {
+    const command = new GetBucketAclCommand({
+      Bucket: bucket
+    });
+
+    try {
+      const response = await this.client.send(command);
+      return response;
+    } catch (error) {
+      console.error("Erro ao obter o ACL do bucket:", error);
+      throw error;
+    }
   }
 
   public async createBucket(bucket: string) {

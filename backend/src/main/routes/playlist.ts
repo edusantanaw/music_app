@@ -4,17 +4,16 @@ import { createPlaylistControllerFactory } from "../factories/controller/create-
 import { loadPlaylistTrackControllerFactory } from "../factories/controller/load-playlist-track";
 import { loadUserPlaylistControllerFactory } from "../factories/controller/load-user-playlist";
 import verifyAuth from "../middlewares/verify-auth";
+import { CreateMulterMiddleware } from "../middlewares/multer";
 
 export default () => {
   const router = Router();
 
   router.use(verifyAuth);
-  router.use((req, res, next)=> {
-    console.log(req.url)
-    next()
-  })
+  const multer = new CreateMulterMiddleware("playlist");
   router.post(
     "/api/playlist",
+    multer.upload().single("file"),
     expressAdpter(createPlaylistControllerFactory())
   );
 

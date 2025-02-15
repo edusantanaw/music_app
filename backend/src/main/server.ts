@@ -28,6 +28,7 @@ class Server {
     GoogleStrategy.configure();
     routes(this.app);
     routines();
+    this.app.use(express.static("public"))
     this.app.listen(this.port, () => {
       this.log.info(`Server running at ${this.port}`);
     });

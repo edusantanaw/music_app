@@ -1,41 +1,38 @@
-import { CreateLocalImage } from "./create-local-image";
+import * as path from "node:path";
 import {
   ICreateImage,
   ICreateImageData,
   ICreateImageResponse,
 } from "./interfaces/create-image";
 import { S3Service } from "./s3-service";
-import * as fs from "node:fs";
 
 export class CreateObjectStorageObject implements ICreateImage {
-  constructor(
-    protected s3Service: S3Service,
-    protected createLocalImage: CreateLocalImage,
-    protected bucket: string
-  ) {}
+  constructor(protected s3Service: S3Service, protected bucket: string) {}
 
   public async create(data: ICreateImageData): Promise<ICreateImageResponse> {
     const shouldDelete: string[] = [];
     try {
-      const localImage = await this.createLocalImage.create(data);
-      shouldDelete.push(localImage.fileDirPath);
-      await this.s3Service.createBucket(this.bucket);
+      console.log(this.bucket)
+      const bucket = await this.s3Service.getBucket(this.bucket)
+      if(!bucket){
+        await this.s3Service.createBucket(this.bucket);
+      }
+      shouldDelete.push(data.path);
+      const filename = path.basename(data.path);
       const s3Url = await this.s3Service.uploadFile({
         bucket: this.bucket,
-        filePath: localImage.fileDirPath,
-        keyName: localImage.filename,
+        filePath: data.path,
+        keyName: filename,
       });
 
       return {
-        fileDirPath: localImage.fileDirPath,
-        filename: data.filename,
+        filename: filename,
         url: s3Url,
       };
     } catch (error) {
       throw error;
     } finally {
-      shouldDelete.forEach((e) => {
-      });
+      shouldDelete.forEach((e) => {});
     }
   }
 }
