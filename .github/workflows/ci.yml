@@ -28,20 +28,30 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install dependencies
+      - name: Install Backend dependencies
         run: |
           cd backend
           npm install
 
-      - name: Run TypeScript build
+      - name: Run Backend build
         run:  |
           cd backend
           npm run build
 
-      - name: Run Tests
+      - name: Run Backend Tests
         run:  |
           cd backend
           npm test
+        
+      - name: Install Frontend dependencies
+        run: |
+          cd frontend
+          npm install
+
+      - name: Run Frontend build
+        run: |
+          cd frontend
+          npm run build
 
       - name: Build backend docker image
         run: docker build -t du-music-backend:latest ./backend
