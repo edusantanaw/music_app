@@ -1,4 +1,4 @@
-import { Api } from "../utils/axios";
+import { Api } from "../shared/utils/axios";
 
 export interface ICreatePlaylist {
   name: string;
@@ -10,7 +10,6 @@ export interface ICreatePlaylist {
 type mapper = Record<string, unknown>;
 async function create(data: ICreatePlaylist) {
   try {
-    console.log(data);
     const formData = new FormData();
     const mappedData: mapper = { ...data };
     for (const key in mappedData) {

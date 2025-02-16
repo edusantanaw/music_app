@@ -1,4 +1,4 @@
-import { Api } from "../utils/axios";
+import { Api } from "../shared/utils/axios";
 
 async function verifyAuth() {
   try {

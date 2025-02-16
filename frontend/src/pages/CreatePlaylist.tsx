@@ -8,6 +8,7 @@ import {
 import { ChangeEvent, useState } from "react";
 import { Container } from "./create-playlist";
 import playlistService from "../services/playlist-service";
+import { useAuthContext } from "../shared/hooks/useAuthContext";
 
 export interface ICreatePlaylist {
   name: string;
@@ -22,6 +23,7 @@ const CreatePlaylist = () => {
   const [description, setDescription] = useState<string>("");
   const [isPublic, setIsPublic] = useState<boolean>(false);
   const [image, setImage] = useState<File | null>(null);
+  const { handleLogout } = useAuthContext();
 
   function handleCover(e: ChangeEvent<HTMLInputElement>) {
     const files = e.target.files;
@@ -45,10 +47,6 @@ const CreatePlaylist = () => {
     } catch (error) {
       console.log(error);
     }
-  }
-
-  async function handleLogout() {
-      window.location.href = "http://localhost:3000/api/logout";
   }
 
   return (

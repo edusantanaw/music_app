@@ -1,9 +1,9 @@
 import { Button } from "@mui/material";
+import { useAuthContext } from "../shared/hooks/useAuthContext";
 
 const Login = () => {
-  async function handleLogin() {
-    window.location.href = "http://localhost:3000/api/google";
-  }
+  const { handleLogin } = useAuthContext();
+
   return (
     <div>
       <Button onClick={handleLogin}>Login</Button>

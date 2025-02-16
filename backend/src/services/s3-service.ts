@@ -16,7 +16,7 @@ interface UploadFile {
   bucket: string;
   filePath: string;
   keyName: string;
-  contentType: string
+  contentType: string;
 }
 
 export class S3Service {
@@ -27,15 +27,14 @@ export class S3Service {
   }
 
   public async getBucket(bucket: string) {
-    const command = new GetBucketAclCommand({
-      Bucket: bucket,
-    });
-
     try {
+      const command = new GetBucketAclCommand({
+        Bucket: bucket,
+      });
       const response = await this.client.send(command);
       return response;
     } catch (error) {
-      console.error("Erro ao obter o ACL do bucket:", error);
+      this.log.error(`Error on get bucket: ${bucket} error: ${error}`);
       throw error;
     }
   }
@@ -76,7 +75,7 @@ export class S3Service {
         Bucket: data.bucket,
         Key: data.keyName,
         Body: fileStream,
-        ContentType: data.contentType
+        ContentType: data.contentType,
       });
       await this.client.send(command);
       const url = new URL(

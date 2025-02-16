@@ -1,17 +1,19 @@
 import {
   createContext,
   ReactNode,
-  useContext,
   useLayoutEffect,
   useState,
 } from "react";
 import authService from "../services/auth-service";
+import { API_URL } from "../shared/constants/Api";
 
 interface IAuthContext {
   authenticated: boolean;
+  handleLogin: () => void;
+  handleLogout: () => void;
 }
 
-const AuthContext = createContext({} as IAuthContext);
+export const AuthContext = createContext({} as IAuthContext);
 
 interface IAuthProvider {
   children: ReactNode;
@@ -29,13 +31,19 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
     setAuthenticated(isAuthenticated);
   }
 
+  function handleLogin() {
+    window.location.href = `${API_URL}/google`;
+  }
+
+  function handleLogout() {
+    window.location.href = `${API_URL}/logout`;
+  }
+
   return (
-    <AuthContext.Provider value={{ authenticated }}>
+    <AuthContext.Provider value={{ authenticated, handleLogin, handleLogout }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-export function useAuthContext() {
-  return useContext(AuthContext);
-}
+
