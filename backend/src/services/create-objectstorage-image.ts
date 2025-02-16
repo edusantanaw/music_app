@@ -1,3 +1,4 @@
+import { unlinkSync } from "node:fs";
 import * as path from "node:path";
 import {
   ICreateImage,
@@ -32,7 +33,9 @@ export class CreateObjectStorageObject implements ICreateImage {
     } catch (error) {
       throw error;
     } finally {
-      shouldDelete.forEach((e) => {});
+      shouldDelete.forEach((e) => {
+        unlinkSync(e)
+      });
     }
   }
 }
