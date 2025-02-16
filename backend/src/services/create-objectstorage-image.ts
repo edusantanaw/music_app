@@ -12,7 +12,6 @@ export class CreateObjectStorageObject implements ICreateImage {
   public async create(data: ICreateImageData): Promise<ICreateImageResponse> {
     const shouldDelete: string[] = [];
     try {
-      console.log(this.bucket)
       const bucket = await this.s3Service.getBucket(this.bucket)
       if(!bucket){
         await this.s3Service.createBucket(this.bucket);
@@ -23,6 +22,7 @@ export class CreateObjectStorageObject implements ICreateImage {
         bucket: this.bucket,
         filePath: data.path,
         keyName: filename,
+        contentType: data.contentType
       });
 
       return {

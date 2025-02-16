@@ -16,6 +16,7 @@ interface UploadFile {
   bucket: string;
   filePath: string;
   keyName: string;
+  contentType: string
 }
 
 export class S3Service {
@@ -27,7 +28,7 @@ export class S3Service {
 
   public async getBucket(bucket: string) {
     const command = new GetBucketAclCommand({
-      Bucket: bucket
+      Bucket: bucket,
     });
 
     try {
@@ -41,26 +42,26 @@ export class S3Service {
 
   public async createBucket(bucket: string) {
     try {
-      const createBucketCommand = new CreateBucketCommand({ Bucket: bucket,  });
+      const createBucketCommand = new CreateBucketCommand({ Bucket: bucket });
       await this.client.send(createBucketCommand);
       this.log.info(`Create bucket ${bucket}`);
       const policy = {
-        Version: '2012-10-17',
+        Version: "2012-10-17",
         Statement: [
           {
-            Effect: 'Allow',
-            Principal: '*',
-            Action: 's3:GetObject',
+            Effect: "Allow",
+            Principal: "*",
+            Action: "s3:GetObject",
             Resource: `arn:aws:s3:::${bucket}/*`,
           },
         ],
       };
-  
+
       const putBucketPolicyCommand = new PutBucketPolicyCommand({
         Bucket: bucket,
         Policy: JSON.stringify(policy),
-      })
-      await this.client.send(putBucketPolicyCommand)
+      });
+      await this.client.send(putBucketPolicyCommand);
       return false;
     } catch (error) {
       this.log.error(`Error on create bucket ${error}`);
@@ -75,9 +76,9 @@ export class S3Service {
         Bucket: data.bucket,
         Key: data.keyName,
         Body: fileStream,
-        ContentType: "text/plain",
+        ContentType: data.contentType
       });
-      const res = await this.client.send(command);
+      await this.client.send(command);
       const url = new URL(
         `${data.bucket}/${data.keyName}`,
         process.env.S3_ENDPOINT

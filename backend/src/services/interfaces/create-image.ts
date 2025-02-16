@@ -1,5 +1,6 @@
 export interface ICreateImageData {
   path: string
+  contentType: string
 }
 
 export type ICreateImageResponse = {

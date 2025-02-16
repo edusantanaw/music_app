@@ -1,5 +1,6 @@
 import { PlaylistRepository } from "../infra/repository/playlist-repository";
 import { ICreateImage } from "./interfaces/create-image";
+import mime from "mime-types";
 
 export interface ICreatePlaylist {
   name: string;
@@ -38,11 +39,11 @@ export class CreatePlaylist {
   }
 
   protected async saveImage(data: ISaveImage) {
-    const path = data.coverImage.path
+    const contentType = mime.lookup(data.coverImage.originalname) || "application/octet-stream";
     const coverImage = await this.createImage.create({
-      path,
+      path: data.coverImage.path,
+      contentType: contentType
     });
-
     return coverImage.url;
   }
 }

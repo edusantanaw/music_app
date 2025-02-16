@@ -48,11 +48,7 @@ const CreatePlaylist = () => {
   }
 
   async function handleLogout() {
-    try {
       window.location.href = "http://localhost:3000/api/logout";
-    } catch (error) {
-      console.log(error);
-    }
   }
 
   return (
