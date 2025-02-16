@@ -1,9 +1,4 @@
-import {
-  createContext,
-  ReactNode,
-  useLayoutEffect,
-  useState,
-} from "react";
+import { createContext, ReactNode, useLayoutEffect, useState } from "react";
 import authService from "../services/auth-service";
 import { API_URL } from "../shared/constants/Api";
 
@@ -11,6 +6,7 @@ interface IAuthContext {
   authenticated: boolean;
   handleLogin: () => void;
   handleLogout: () => void;
+  verifyUserAuth: () => Promise<boolean>;
 }
 
 export const AuthContext = createContext({} as IAuthContext);
@@ -29,6 +25,7 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
   async function verifyUserAuth() {
     const isAuthenticated = await authService.verifyAuth();
     setAuthenticated(isAuthenticated);
+    return isAuthenticated
   }
 
   function handleLogin() {
@@ -40,10 +37,10 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
   }
 
   return (
-    <AuthContext.Provider value={{ authenticated, handleLogin, handleLogout }}>
+    <AuthContext.Provider
+      value={{ authenticated, handleLogin, handleLogout, verifyUserAuth }}
+    >
       {children}
     </AuthContext.Provider>
   );
 };
-
-

@@ -9,18 +9,14 @@ export interface ICreatePlaylist {
 
 type mapper = Record<string, unknown>;
 async function create(data: ICreatePlaylist) {
-  try {
-    const formData = new FormData();
-    const mappedData: mapper = { ...data };
-    for (const key in mappedData) {
-      const value = mappedData[key];
-      formData.append(key, value as unknown as string);
-    }
-    const response = await Api.post("/playlist", formData);
-    return response.data;
-  } catch (error) {
-    console.log(error);
+  const formData = new FormData();
+  const mappedData: mapper = { ...data };
+  for (const key in mappedData) {
+    const value = mappedData[key];
+    formData.append(key, value as unknown as string);
   }
+  const response = await Api.post("/playlist", formData);
+  return response.data;
 }
 
 export default {

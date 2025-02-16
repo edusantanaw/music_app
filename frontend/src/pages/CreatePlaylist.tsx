@@ -6,17 +6,10 @@ import {
   TextField,
 } from "@mui/material";
 import { ChangeEvent, useState } from "react";
-import { Container } from "./create-playlist";
 import playlistService from "../services/playlist-service";
 import { useAuthContext } from "../shared/hooks/useAuthContext";
-
-export interface ICreatePlaylist {
-  name: string;
-  description: string;
-  coverImage?: File;
-  isPublic: boolean;
-  userId: string;
-}
+import { useValidateRequest } from "../shared/hooks/useValidateRequest";
+import { Container } from "./create-playlist";
 
 const CreatePlaylist = () => {
   const [name, setName] = useState<string>("");
@@ -25,10 +18,13 @@ const CreatePlaylist = () => {
   const [image, setImage] = useState<File | null>(null);
   const { handleLogout } = useAuthContext();
 
+  const validateCreateRequest = useValidateRequest({
+    action: playlistService.create,
+  });
+
   function handleCover(e: ChangeEvent<HTMLInputElement>) {
     const files = e.target.files;
     if (files && files[0]) {
-      console.log("seted");
       setImage(files[0]);
       return;
     }
@@ -37,7 +33,7 @@ const CreatePlaylist = () => {
 
   async function handleCreate() {
     try {
-      const data = await playlistService.create({
+      const data = await validateCreateRequest({
         file: image ?? undefined,
         name,
         description,
@@ -90,7 +86,10 @@ const CreatePlaylist = () => {
         </Button>
       </form>
       <Button onClick={handleLogout}>Logout</Button>
-      <img src="http://localhost:9000/playlist2/87fc6ef14a5c84ebc687f8d20def7b49-CamScanner%2025-09-2024%2011.17%20(1)_1.jpg" alt="img" />
+      <img
+        src="http://localhost:9000/playlist2/87fc6ef14a5c84ebc687f8d20def7b49-CamScanner%2025-09-2024%2011.17%20(1)_1.jpg"
+        alt="img"
+      />
     </Container>
   );
 };
