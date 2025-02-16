@@ -13,7 +13,7 @@ import { useAuthContext } from "../shared/hooks/useAuthContext";
 export interface ICreatePlaylist {
   name: string;
   description: string;
-  coverImage?: Express.Multer.File;
+  coverImage?: File;
   isPublic: boolean;
   userId: string;
 }
