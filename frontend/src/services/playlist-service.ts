@@ -8,6 +8,7 @@ export interface ICreatePlaylist {
 }
 
 type mapper = Record<string, unknown>;
+
 async function create(data: ICreatePlaylist) {
   const formData = new FormData();
   const mappedData: mapper = { ...data };

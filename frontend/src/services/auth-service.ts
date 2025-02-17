@@ -2,16 +2,14 @@ import { Api } from "../shared/utils/axios";
 
 async function verifyAuth() {
   try {
-    const res = await Api.get("/verify-auth");
-    console.log(res)
+    await Api.get("/verify-auth");
     return true;
   } catch (err) {
-    console.log(err)
+    console.log(err);
     return false;
   }
 }
 
 export default {
-    verifyAuth
-}
-
+  verifyAuth,
+};

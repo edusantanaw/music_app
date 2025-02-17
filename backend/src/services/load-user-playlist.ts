@@ -4,10 +4,10 @@ export class LoadUserPlaylist {
   constructor(protected repository: PlaylistRepository) {}
 
   public async load(requestedId: string, userId: string) {
-    const playlists = await this.repository.loadByUser(
-      requestedId,
-      requestedId !== userId
-    );
+    const playlists = await this.repository.loadByUser({
+      userId: requestedId,
+      publicOnly: requestedId !== userId,
+    });
     return playlists;
   }
 }

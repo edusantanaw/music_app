@@ -11,8 +11,6 @@ export function useValidateRequest<In, Out>({ action }: Props<In, Out>) {
       return await action(data);
     } catch (error) {
       const { status } = error as { status: number };
-      console.log(error)
-      console.log(status);
       if (status === 401) {
         await verifyUserAuth();
         return;

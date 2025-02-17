@@ -11,6 +11,11 @@ interface ICreatePlaylist {
   owner: string;
 }
 
+interface ILoadByUser {
+  publicOnly: boolean;
+  userId: string;
+}
+
 export class PlaylistRepository {
   protected repository: Repository<Playlist>;
   constructor() {
@@ -26,19 +31,19 @@ export class PlaylistRepository {
       isPublic: data.isPublic,
       id: randomUUID(),
       owner: {
-        id: data.owner
-      }
+        id: data.owner,
+      },
     });
     const createdPlaylist = await this.repository.save(playlist);
     return createdPlaylist;
   }
 
-  public async loadByUser(userId: string, publicOnly: boolean) {
+  public async loadByUser({ publicOnly, userId }: ILoadByUser) {
     const playlists = await this.repository.findBy({
       owner: {
-        id: userId
+        id: userId,
       },
-      isPublic: publicOnly ? true : undefined
+      isPublic: publicOnly ? true : undefined,
     });
 
     return playlists;

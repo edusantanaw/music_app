@@ -44,23 +44,7 @@ export class S3Service {
       const createBucketCommand = new CreateBucketCommand({ Bucket: bucket });
       await this.client.send(createBucketCommand);
       this.log.info(`Create bucket ${bucket}`);
-      const policy = {
-        Version: "2012-10-17",
-        Statement: [
-          {
-            Effect: "Allow",
-            Principal: "*",
-            Action: "s3:GetObject",
-            Resource: `arn:aws:s3:::${bucket}/*`,
-          },
-        ],
-      };
-
-      const putBucketPolicyCommand = new PutBucketPolicyCommand({
-        Bucket: bucket,
-        Policy: JSON.stringify(policy),
-      });
-      await this.client.send(putBucketPolicyCommand);
+      await this.configBucketPolices(bucket);
       return false;
     } catch (error) {
       this.log.error(`Error on create bucket ${error}`);
@@ -87,6 +71,26 @@ export class S3Service {
       this.log.error(`Error on upload file ${error}`);
       throw error;
     }
+  }
+
+  protected async configBucketPolices(bucket: string) {
+    const policy = {
+      Version: "2012-10-17",
+      Statement: [
+        {
+          Effect: "Allow",
+          Principal: "*",
+          Action: "s3:GetObject",
+          Resource: `arn:aws:s3:::${bucket}/*`,
+        },
+      ],
+    };
+
+    const putBucketPolicyCommand = new PutBucketPolicyCommand({
+      Bucket: bucket,
+      Policy: JSON.stringify(policy),
+    });
+    await this.client.send(putBucketPolicyCommand);
   }
 
   protected getCredentials(): S3ClientConfig {

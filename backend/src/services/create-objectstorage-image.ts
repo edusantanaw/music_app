@@ -1,5 +1,6 @@
-import { unlinkSync } from "node:fs";
+import { unlink } from "node:fs";
 import * as path from "node:path";
+import { promisify } from "node:util";
 import {
   ICreateImage,
   ICreateImageData,
@@ -7,17 +8,16 @@ import {
 } from "./interfaces/create-image";
 import { S3Service } from "./s3-service";
 
+const unlinkAsync = promisify(unlink)
+
 export class CreateObjectStorageObject implements ICreateImage {
   constructor(protected s3Service: S3Service, protected bucket: string) {}
 
   public async create(data: ICreateImageData): Promise<ICreateImageResponse> {
     const shouldDelete: string[] = [];
     try {
-      const bucket = await this.s3Service.getBucket(this.bucket)
-      if(!bucket){
-        await this.s3Service.createBucket(this.bucket);
-      }
       shouldDelete.push(data.path);
+      await this.ensureBucketExits()
       const filename = path.basename(data.path);
       const s3Url = await this.s3Service.uploadFile({
         bucket: this.bucket,
@@ -33,9 +33,16 @@ export class CreateObjectStorageObject implements ICreateImage {
     } catch (error) {
       throw error;
     } finally {
-      shouldDelete.forEach((e) => {
-        unlinkSync(e)
-      });
+      for await (const file of shouldDelete) {
+        await unlinkAsync(file)
+      }
+    }
+  }
+
+  protected async ensureBucketExits() {
+    const bucket = await this.s3Service.getBucket(this.bucket)
+    if(!bucket){
+      await this.s3Service.createBucket(this.bucket);
     }
   }
 }
